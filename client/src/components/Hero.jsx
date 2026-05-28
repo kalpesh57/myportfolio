@@ -1,9 +1,51 @@
 import { TypeAnimation } from "react-type-animation";
+
 import { motion } from "framer-motion";
+
+import {
+  useEffect,
+  useState,
+} from "react";
+
+import axios from "axios";
+
 import "./Hero.css";
 
 const Hero = () => {
+
+  const [heroData, setHeroData] =
+    useState({
+      title: "",
+      subtitle: "",
+      buttonText: "",
+    });
+
+  useEffect(() => {
+
+    fetchHero();
+
+  }, []);
+
+  const fetchHero = async () => {
+
+    try {
+
+      const response = await axios.get(
+        "http://localhost:5000/api/hero"
+      );
+
+      setHeroData(response.data);
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
+  };
+
   return (
+
     <section className="hero">
 
       <motion.div
@@ -11,8 +53,9 @@ const Hero = () => {
         animate={{ opacity:1, y:0 }}
         transition={{ duration:1 }}
       >
+
         <h1>
-          Hi, I'm <span>Kalpesh</span>
+          {heroData.title}
         </h1>
 
         <TypeAnimation
@@ -30,18 +73,19 @@ const Hero = () => {
         />
 
         <p>
-          Building futuristic modern web experiences with React,
-          animations and 3D technologies.
+          {heroData.subtitle}
         </p>
 
         <button>
-          View Projects
+          {heroData.buttonText}
         </button>
 
       </motion.div>
 
     </section>
+
   );
+
 };
 
 export default Hero;

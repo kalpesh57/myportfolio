@@ -1,18 +1,22 @@
-import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
-import ParticleBackground from "../components/ParticleBackground";
-import FloatingShapes from "../components/FloatingShapes";
+
+import Navbar from "../components/Navbar";
 
 import About from "./About";
+
 import Skills from "./Skills";
+
 import Projects from "./Projects";
+
+import Certificates
+  from "./Certificates";
 import Contact from "./Contact";
 
 const Home = () => {
+
   return (
+
     <>
-      <ParticleBackground />
-      <FloatingShapes />
 
       <Navbar />
 
@@ -20,13 +24,33 @@ const Home = () => {
 
       <About />
 
-      <Skills />
+      <section id="skills">
 
-      <Projects />
+        <Skills />
 
-      <Contact />
+      </section>
+
+      <section id="projects">
+
+        <Projects />
+
+      </section>
+
+      <section id="certificates">
+
+        <Certificates />
+
+      </section>
+      <section id="contact">
+
+        <Contact />
+
+      </section>
+
     </>
+
   );
+
 };
 
 export default Home;

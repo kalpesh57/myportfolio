@@ -1,73 +1,70 @@
 import "./Skills.css";
 
-const skills = [
-  {
-    name: "HTML",
-    level: "95%",
-  },
-  {
-    name: "CSS",
-    level: "90%",
-  },
-  {
-    name: "JavaScript",
-    level: "85%",
-  },
-  {
-    name: "React",
-    level: "80%",
-  },
-  {
-    name: "Node.js",
-    level: "75%",
-  },
-  {
-    name: "MongoDB",
-    level: "70%",
-  },
-];
+import {
+  useEffect,
+  useState,
+} from "react";
+
+import axios from "axios";
 
 const Skills = () => {
+
+  const [skills, setSkills] =
+    useState([]);
+
+  useEffect(() => {
+
+    fetchSkills();
+
+  }, []);
+
+  const fetchSkills = async () => {
+
+    try {
+
+      const response = await axios.get(
+        "http://localhost:5000/api/skills"
+      );
+
+      setSkills(response.data);
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
+  };
+
   return (
-    <section className="skills" id="skills">
 
-      <div
-        className="skills-content"
-        data-aos="fade-up"
-      >
+    <section className="skills">
 
-        <h2>Skills</h2>
+      <h1>
+        Skills
+      </h1>
 
-        <div className="skills-grid">
+      <div className="skills-container">
 
-          {skills.map((skill, index) => (
+        {skills.map((skill) => (
 
-            <div className="skill-card" key={index}>
+          <div
+            className="skill-card"
+            key={skill._id}
+          >
 
-              <div className="skill-header">
-                <h3>{skill.name}</h3>
-                <span>{skill.level}</span>
-              </div>
+            {skill.name}
 
-              <div className="progress-bar">
+          </div>
 
-                <div
-                  className="progress"
-                  style={{ width: skill.level }}
-                ></div>
-
-              </div>
-
-            </div>
-
-          ))}
-
-        </div>
+        ))}
 
       </div>
 
     </section>
+
   );
+
 };
 
 export default Skills;

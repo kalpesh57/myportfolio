@@ -24,181 +24,498 @@ const Admin = () => {
 
   const [image, setImage] = useState(null);
   const [projects, setProjects] =
-  useState([]);
+    useState([]);
 
-const [projectData, setProjectData] =
-
-
-  useState({
-    title: "",
-    description: "",
-    tech: "",
-    github: "",
-    live: "",
-  });
-useEffect(() => {
-
-  fetchProjects();
-
-  fetchMessages();
-
-  fetchHero();
-
-}, []);
-const [messages, setMessages] =
-  useState([]);
-  
-const [heroData, setHeroData] =
-  useState({
-    title: "",
-    subtitle: "",
-    buttonText: "",
-  });
-
-const fetchProjects = async () => {
-
-  try {
-
-    const response = await axios.get(
-      "http://localhost:5000/api/projects"
-    );
-
-    setProjects(response.data);
-
-  } catch (error) {
-
-    console.log(error);
-
-  }
-
-};
-
-const addProject = async (e) => {
-
-  e.preventDefault();
-
-  try {
-
-    await axios.post(
-      "http://localhost:5000/api/projects",
-      projectData
-    );
-
-    alert("Project Added");
-
-    fetchProjects();
+  const [projectData, setProjectData] =
 
 
-    setProjectData({
+    useState({
       title: "",
       description: "",
       tech: "",
       github: "",
       live: "",
     });
-
-  } catch (error) {
-
-    console.log(error);
-
-  }
-
-};
-
-const deleteProject = async (id) => {
-
-  try {
-
-    await axios.delete(
-      `http://localhost:5000/api/projects/${id}`
-    );
-
-    alert("Project Deleted");
+  const [editingProjectId,
+    setEditingProjectId] =
+    useState(null);
+  useEffect(() => {
 
     fetchProjects();
 
-  } catch (error) {
-
-    console.log(error);
-
-  }
-
-};
-const fetchMessages = async () => {
-
-  try {
-
-    const response = await axios.get(
-      "http://localhost:5000/api/contact"
-    );
-
-    setMessages(response.data);
-
-  } catch (error) {
-
-    console.log(error);
-
-  }
-
-};
-
-const deleteMessage = async (id) => {
-
-  try {
-
-    await axios.delete(
-      `http://localhost:5000/api/contact/${id}`
-    );
-
-    alert("Message Deleted");
-
     fetchMessages();
 
-  } catch (error) {
+    fetchHero();
 
-    console.log(error);
+    fetchSkills();
 
-  }
+  }, []);
+  const [messages, setMessages] =
+    useState([]);
 
-};
-const fetchHero = async () => {
+  const [heroData, setHeroData] =
+    useState({
+      title: "",
+      subtitle: "",
+      buttonText: "",
+    });
+  const [skills, setSkills] =
+    useState([]);
 
-  try {
+  const [skillName, setSkillName] =
+    useState("");
+  const [editingSkillId,
+    setEditingSkillId] =
+    useState(null);
 
-    const response = await axios.get(
-      "http://localhost:5000/api/hero"
+  const fetchProjects = async () => {
+
+    try {
+
+      const response = await axios.get(
+        "http://localhost:5000/api/projects"
+      );
+
+      setProjects(response.data);
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
+  };
+
+  const addProject = async (e) => {
+
+    e.preventDefault();
+
+    try {
+
+      await axios.post(
+        "http://localhost:5000/api/projects",
+        projectData
+      );
+
+      alert("Project Added");
+
+      fetchProjects();
+
+
+      setProjectData({
+        title: "",
+        description: "",
+        tech: "",
+        github: "",
+        live: "",
+      });
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
+  };
+
+  const deleteProject = async (id) => {
+
+    try {
+
+      await axios.delete(
+        `http://localhost:5000/api/projects/${id}`
+      );
+
+      alert("Project Deleted");
+
+      fetchProjects();
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
+  };
+  const editProject = (project) => {
+
+    setProjectData({
+      title: project.title,
+      description: project.description,
+      tech: project.tech,
+      image: project.image,
+      github: project.github,
+      live: project.live,
+    });
+
+    setEditingProjectId(
+      project._id
     );
 
-    setHeroData(response.data);
+  };
 
-  } catch (error) {
+  const updateProject = async (e) => {
 
-    console.log(error);
+    e.preventDefault();
 
-  }
+    try {
 
-};
+      await axios.put(
+        `http://localhost:5000/api/projects/${editingProjectId}`,
+        projectData
+      );
 
-const updateHero = async (e) => {
+      alert("Project Updated");
 
-  e.preventDefault();
+      setEditingProjectId(null);
 
-  try {
+      setProjectData({
+        title: "",
+        description: "",
+        tech: "",
+        image: "",
+        github: "",
+        live: "",
+      });
 
-    await axios.post(
-      "http://localhost:5000/api/hero",
-      heroData
+      fetchProjects();
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
+  };
+
+  const fetchMessages = async () => {
+
+    try {
+
+      const response = await axios.get(
+        "http://localhost:5000/api/contact"
+      );
+
+      setMessages(response.data);
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
+  };
+
+  const deleteMessage = async (id) => {
+
+    try {
+
+      await axios.delete(
+        `http://localhost:5000/api/contact/${id}`
+      );
+
+      alert("Message Deleted");
+
+      fetchMessages();
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
+  };
+  const fetchHero = async () => {
+
+    try {
+
+      const response = await axios.get(
+        "http://localhost:5000/api/hero"
+      );
+
+      setHeroData(response.data);
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
+  };
+
+  const updateHero = async (e) => {
+
+    e.preventDefault();
+
+    try {
+
+      await axios.post(
+        "http://localhost:5000/api/hero",
+        heroData
+      );
+
+      alert("Hero Updated");
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
+  };
+  const fetchSkills = async () => {
+
+    try {
+
+      const response = await axios.get(
+        "http://localhost:5000/api/skills"
+      );
+
+      setSkills(response.data);
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
+  };
+
+  const addSkill = async (e) => {
+
+    e.preventDefault();
+
+    try {
+
+      await axios.post(
+        "http://localhost:5000/api/skills",
+        {
+          name: skillName,
+        }
+      );
+
+      alert("Skill Added");
+
+      setSkillName("");
+
+      fetchSkills();
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
+  };
+
+  const deleteSkill = async (id) => {
+
+    try {
+
+      await axios.delete(
+        `http://localhost:5000/api/skills/${id}`
+      );
+
+      alert("Skill Deleted");
+
+      fetchSkills();
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
+  };
+  const editSkill = (skill) => {
+
+    setSkillName(skill.name);
+
+    setEditingSkillId(
+      skill._id
     );
 
-    alert("Hero Updated");
+  };
 
-  } catch (error) {
+  const [certificates,
+    setCertificates] =
+    useState([]);
 
-    console.log(error);
+  const [certificateData,
+    setCertificateData] =
+    useState({
+      title: "",
+      organization: "",
+      issueDate: "",
+      image: "",
+    });
 
-  }
+  const [editingCertificateId,
+    setEditingCertificateId] =
+    useState(null);
 
-};
+  const updateSkill = async (e) => {
+
+    e.preventDefault();
+
+    try {
+
+      await axios.put(
+        `http://localhost:5000/api/skills/${editingSkillId}`,
+        {
+          name: skillName,
+        }
+      );
+
+      alert("Skill Updated");
+
+      setEditingSkillId(null);
+
+      setSkillName("");
+
+      fetchSkills();
+
+      fetchCertificates();
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
+  };
+  const fetchCertificates =
+    async () => {
+
+      try {
+
+        const response =
+          await axios.get(
+            "http://localhost:5000/api/certificates"
+          );
+
+        setCertificates(
+          response.data
+        );
+
+      } catch (error) {
+
+        console.log(error);
+
+      }
+
+    };
+
+  const addCertificate =
+    async (e) => {
+
+      e.preventDefault();
+
+      try {
+
+        await axios.post(
+          "http://localhost:5000/api/certificates",
+          certificateData
+        );
+
+        alert(
+          "Certificate Added"
+        );
+
+        fetchCertificates();
+
+        setCertificateData({
+          title: "",
+          organization: "",
+          issueDate: "",
+          image: "",
+        });
+
+      } catch (error) {
+
+        console.log(error);
+
+      }
+
+    };
+
+  const deleteCertificate =
+    async (id) => {
+
+      try {
+
+        await axios.delete(
+          `http://localhost:5000/api/certificates/${id}`
+        );
+
+        alert(
+          "Certificate Deleted"
+        );
+
+        fetchCertificates();
+
+      } catch (error) {
+
+        console.log(error);
+
+      }
+
+    };
+
+  const editCertificate =
+    (certificate) => {
+
+      setCertificateData({
+        title: certificate.title,
+        organization:
+          certificate.organization,
+        issueDate:
+          certificate.issueDate,
+        image: certificate.image,
+      });
+
+      setEditingCertificateId(
+        certificate._id
+      );
+
+    };
+
+  const updateCertificate =
+    async (e) => {
+
+      e.preventDefault();
+
+      try {
+
+        await axios.put(
+          `http://localhost:5000/api/certificates/${editingCertificateId}`,
+          certificateData
+        );
+
+        alert(
+          "Certificate Updated"
+        );
+
+        setEditingCertificateId(
+          null
+        );
+
+        setCertificateData({
+          title: "",
+          organization: "",
+          issueDate: "",
+          image: "",
+        });
+
+        fetchCertificates();
+
+      } catch (error) {
+
+        console.log(error);
+
+      }
+
+    };
 
   // LOGIN
 
@@ -233,30 +550,30 @@ const updateHero = async (e) => {
   const handleProfileUpload =
     async (e) => {
 
-    e.preventDefault();
+      e.preventDefault();
 
-    const formData = new FormData();
+      const formData = new FormData();
 
-    formData.append("name", name);
+      formData.append("name", name);
 
-    formData.append("image", image);
+      formData.append("image", image);
 
-    try {
+      try {
 
-      await axios.post(
-        "http://localhost:5000/api/profile/upload",
-        formData
-      );
+        await axios.post(
+          "http://localhost:5000/api/profile/upload",
+          formData
+        );
 
-      alert("Profile Updated");
+        alert("Profile Updated");
 
-    } catch (error) {
+      } catch (error) {
 
-      console.log(error);
+        console.log(error);
 
-    }
+      }
 
-  };
+    };
 
   // LOGOUT
 
@@ -436,52 +753,52 @@ const updateHero = async (e) => {
 
             <h1>Hero Section</h1>
 
-              <form
-                className="cms-form"
-                onSubmit={updateHero}
-              >
+            <form
+              className="cms-form"
+              onSubmit={updateHero}
+            >
 
-                <input
-                  type="text"
-                  placeholder="Hero Title"
-                  value={heroData.title}
-                  onChange={(e) =>
-                    setHeroData({
-                      ...heroData,
-                      title: e.target.value,
-                      })
-                  }
-                />
+              <input
+                type="text"
+                placeholder="Hero Title"
+                value={heroData.title}
+                onChange={(e) =>
+                  setHeroData({
+                    ...heroData,
+                    title: e.target.value,
+                  })
+                }
+              />
 
-                <input
-                  type="text"
-                  placeholder="Subtitle"
-                  value={heroData.subtitle}
-                  onChange={(e) =>
-                    setHeroData({
-                      ...heroData,
-                      subtitle: e.target.value,
-                    })
-                  }
-                />
+              <input
+                type="text"
+                placeholder="Subtitle"
+                value={heroData.subtitle}
+                onChange={(e) =>
+                  setHeroData({
+                    ...heroData,
+                    subtitle: e.target.value,
+                  })
+                }
+              />
 
-                <input
-                  type="text"
-                  placeholder="Button Text"
-                  value={heroData.buttonText}
-                  onChange={(e) =>
-                    setHeroData({
-                      ...heroData,
-                      buttonText: e.target.value,
-                    })
-                  }
-                />
+              <input
+                type="text"
+                placeholder="Button Text"
+                value={heroData.buttonText}
+                onChange={(e) =>
+                  setHeroData({
+                    ...heroData,
+                    buttonText: e.target.value,
+                  })
+                }
+              />
 
-                <button type="submit">
-                  Update Hero
-                </button>
+              <button type="submit">
+                Update Hero
+              </button>
 
-              </form>
+            </form>
 
           </div>
 
@@ -493,168 +810,393 @@ const updateHero = async (e) => {
 
           <div className="cms-section">
 
-            <h1>Skills</h1>
+            <h1>
+              Skills
+            </h1>
 
-            <p>
-              Skills CRUD coming next...
-            </p>
+            <form
+              className="cms-form"
+              onSubmit={
+                editingSkillId
+                  ? updateSkill
+                  : addSkill
+              }
+            >
+
+              <input
+                type="text"
+                placeholder="Skill Name"
+                value={skillName}
+                onChange={(e) =>
+                  setSkillName(
+                    e.target.value
+                  )
+                }
+              />
+
+              <button type="submit">
+                {editingSkillId
+                  ? "Update Skill"
+                  : "Add Skill"}
+              </button>
+
+            </form>
+
+            <div className="project-list">
+
+              {skills.map((skill) => (
+
+                <div
+                  className="project-item"
+                  key={skill._id}
+                >
+
+                  <h3>
+                    {skill.name}
+                  </h3>
+                  <button
+                    onClick={() =>
+                      editSkill(skill)
+                    }
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() =>
+                      deleteSkill(skill._id)
+                    }
+                  >
+                    Delete
+                  </button>
+
+                </div>
+
+              ))}
+
+            </div>
 
           </div>
 
         )}
 
-{/* PROJECTS */}
+        {/* PROJECTS */}
 
-{activeSection === "projects" && (
+        {activeSection === "projects" && (
 
-  <div className="cms-section">
+          <div className="cms-section">
 
-    <h1>Projects</h1>
+            <h1>Projects</h1>
 
-    <form
-      className="cms-form"
-      onSubmit={addProject}
-    >
+            <form
+              className="cms-form"
+              onSubmit={
+                editingProjectId
+                  ? updateProject
+                  : addProject
+              }
+            >
 
-      <input
-        type="text"
-        placeholder="Project Title"
-        value={projectData.title}
-        onChange={(e) =>
-          setProjectData({
-            ...projectData,
-            title: e.target.value,
-          })
-        }
-      />
+              <input
+                type="text"
+                placeholder="Project Title"
+                value={projectData.title}
+                onChange={(e) =>
+                  setProjectData({
+                    ...projectData,
+                    title: e.target.value,
+                  })
+                }
+              />
 
-      <input
-        type="text"
-        placeholder="Description"
-        value={projectData.description}
-        onChange={(e) =>
-          setProjectData({
-            ...projectData,
-            description: e.target.value,
-          })
-        }
-      />
+              <input
+                type="text"
+                placeholder="Description"
+                value={projectData.description}
+                onChange={(e) =>
+                  setProjectData({
+                    ...projectData,
+                    description: e.target.value,
+                  })
+                }
+              />
 
-      <input
-        type="text"
-        placeholder="Tech Stack"
-        value={projectData.tech}
-        onChange={(e) =>
-          setProjectData({
-            ...projectData,
-            tech: e.target.value,
-          })
-        }
-      />
+              <input
+                type="text"
+                placeholder="Tech Stack"
+                value={projectData.tech}
+                onChange={(e) =>
+                  setProjectData({
+                    ...projectData,
+                    tech: e.target.value,
+                  })
+                }
+              />
 
-      <button type="submit">
-        Add Project
-      </button>
+              <input
+                type="text"
+                placeholder="Project Image URL"
+                value={projectData.image}
+                onChange={(e) =>
+                  setProjectData({
+                    ...projectData,
+                    image: e.target.value,
+                  })
+                }
+              />
 
-    </form>
+              <input
+                type="text"
+                placeholder="GitHub Link"
+                value={projectData.github}
+                onChange={(e) =>
+                  setProjectData({
+                    ...projectData,
+                    github: e.target.value,
+                  })
+                }
+              />
 
-    <div className="project-list">
+              <input
+                type="text"
+                placeholder="Live Demo Link"
+                value={projectData.live}
+                onChange={(e) =>
+                  setProjectData({
+                    ...projectData,
+                    live: e.target.value,
+                  })
+                }
+              />
 
-      {projects.map((project) => (
+              <button type="submit">
 
-        <div
-          className="project-item"
-          key={project._id}
-        >
+                {editingProjectId
+                  ? "Update Project"
+                  : "Add Project"}
 
-          <h3>
-            {project.title}
-          </h3>
+              </button>
 
-          <p>
-            {project.description}
-          </p>
+            </form>
 
-          <button
-            onClick={() =>
-              deleteProject(project._id)
-            }
-          >
-            Delete
-          </button>
+            <div className="project-list">
 
-        </div>
+              {projects.map((project) => (
 
-      ))}
+                <div
+                  className="project-item"
+                  key={project._id}
+                >
 
-    </div>
+                  <h3>
+                    {project.title}
+                  </h3>
 
-  </div>
+                  <p>
+                    {project.description}
+                  </p>
 
-)}
+                  <button
+                    onClick={() =>
+                      editProject(project)
+                    }
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() =>
+                      deleteProject(project._id)
+                    }
+                  >
+                    Delete
+                  </button>
 
-{/* CERTIFICATES */}
+                </div>
 
-{activeSection === "certificates" && (
+              ))}
 
-  <div className="cms-section">
+            </div>
 
-    <h1>Certificates</h1>
+          </div>
 
-    <p>
-      Certificates CRUD coming next...
-    </p>
+        )}
 
-  </div>
+        {/* CERTIFICATES */}
 
-)}
+        {activeSection === "certificates" && (
 
-{/* MESSAGES */}
+          <div className="cms-section">
 
-{activeSection === "messages" && (
+            <h1>
+              Certificates
+            </h1>
 
-  <div className="cms-section">
+            <form
+              className="cms-form"
+              onSubmit={
+                editingCertificateId
+                  ? updateCertificate
+                  : addCertificate
+              }
+            >
 
-    <h1>Messages</h1>
+              <input
+                type="text"
+                placeholder="Certificate Title"
+                value={certificateData.title}
+                onChange={(e) =>
+                  setCertificateData({
+                    ...certificateData,
+                    title: e.target.value,
+                  })
+                }
+              />
 
-    <div className="project-list">
+              <input
+                type="text"
+                placeholder="Organization"
+                value={certificateData.organization}
+                onChange={(e) =>
+                  setCertificateData({
+                    ...certificateData,
+                    organization:
+                      e.target.value,
+                  })
+                }
+              />
 
-      {messages.map((msg) => (
+              <input
+                type="text"
+                placeholder="Issue Date"
+                value={certificateData.issueDate}
+                onChange={(e) =>
+                  setCertificateData({
+                    ...certificateData,
+                    issueDate:
+                      e.target.value,
+                  })
+                }
+              />
 
-        <div
-          className="project-item"
-          key={msg._id}
-        >
+              <input
+                type="text"
+                placeholder="Certificate Image URL"
+                value={certificateData.image}
+                onChange={(e) =>
+                  setCertificateData({
+                    ...certificateData,
+                    image: e.target.value,
+                  })
+                }
+              />
 
-          <h3>
-            {msg.name}
-          </h3>
+              <button type="submit">
 
-          <p>
-            {msg.email}
-          </p>
+                {editingCertificateId
+                  ? "Update Certificate"
+                  : "Add Certificate"}
 
-          <p>
-            {msg.message}
-          </p>
+              </button>
 
-          <button
-            onClick={() =>
-              deleteMessage(msg._id)
-            }
-          >
-            Delete
-          </button>
+            </form>
 
-        </div>
+            <div className="project-list">
 
-      ))}
+              {certificates.map(
+                (certificate) => (
 
-    </div>
+                  <div
+                    className="project-item"
+                    key={certificate._id}
+                  >
 
-  </div>
+                    <h3>
+                      {certificate.title}
+                    </h3>
 
-)}
+                    <p>
+                      {certificate.organization}
+                    </p>
+
+                    <p>
+                      {certificate.issueDate}
+                    </p>
+
+                    <button
+                      onClick={() =>
+                        editCertificate(
+                          certificate
+                        )
+                      }
+                    >
+                      Edit
+                    </button>
+
+                    <button
+                      onClick={() =>
+                        deleteCertificate(
+                          certificate._id
+                        )
+                      }
+                    >
+                      Delete
+                    </button>
+
+                  </div>
+
+                ))}
+
+            </div>
+
+          </div>
+
+        )}
+
+        {/* MESSAGES */}
+
+        {activeSection === "messages" && (
+
+          <div className="cms-section">
+
+            <h1>Messages</h1>
+
+            <div className="project-list">
+
+              {messages.map((msg) => (
+
+                <div
+                  className="project-item"
+                  key={msg._id}
+                >
+
+                  <h3>
+                    {msg.name}
+                  </h3>
+
+                  <p>
+                    {msg.email}
+                  </p>
+
+                  <p>
+                    {msg.message}
+                  </p>
+
+                  <button
+                    onClick={() =>
+                      deleteMessage(msg._id)
+                    }
+                  >
+                    Delete
+                  </button>
+
+                </div>
+
+              ))}
+
+            </div>
+
+          </div>
+
+        )}
 
       </div>
 

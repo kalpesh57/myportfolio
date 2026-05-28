@@ -1,79 +1,193 @@
 import "./Projects.css";
-import { FaGithub } from "react-icons/fa";
-import { FiExternalLink } from "react-icons/fi";
 
-const projects = [
-  {
-    title: "3D Portfolio",
-    description:
-      "Modern futuristic portfolio website with animations and 3D effects.",
-    tech: "React • Three.js • Framer Motion",
-  },
+import {
+  useEffect,
+  useState,
+} from "react";
 
-  {
-    title: "E-Library System",
-    description:
-      "Full stack digital library management system.",
-    tech: "React • Django • MySQL",
-  },
-
-  {
-    title: "Restaurant App",
-    description:
-      "Premium modern restaurant mobile application UI.",
-    tech: "React • Node.js • MongoDB",
-  },
-];
+import axios from "axios";
 
 const Projects = () => {
+
+  const [projects,
+    setProjects] =
+    useState([]);
+
+  useEffect(() => {
+
+    fetchProjects();
+
+  }, []);
+
+  const fetchProjects =
+    async () => {
+
+      try {
+
+        const response =
+          await axios.get(
+            "http://localhost:5000/api/projects"
+          );
+
+        setProjects(
+          response.data
+        );
+
+      } catch (error) {
+
+        console.log(error);
+
+      }
+
+    };
+
   return (
-    <section className="projects" id="projects">
+
+    <section
+      className="projects"
+      id="projects"
+    >
+
+      <h1>
+        Projects
+      </h1>
 
       <div
-        className="projects-content"
-        data-aos="fade-up"
+        id="projectCarousel"
+        className=
+        "carousel slide"
+        data-bs-ride=
+        "carousel"
       >
 
-        <h2>Projects</h2>
+        <div
+          className=
+          "carousel-inner"
+        >
 
-        <div className="projects-grid">
+          {projects.map(
+            (
+              project,
+              index
+            ) => (
 
-          {projects.map((project, index) => (
+              <div
 
-            <div className="project-card" key={index}>
+                key={project._id}
 
-              <div className="project-image"></div>
+                className={`carousel-item ${index === 0
+                    ? "active"
+                    : ""
+                  }`}
+              >
 
-              <h3>{project.title}</h3>
+                <div
+                  className=
+                  "project-card"
+                >
 
-              <p>{project.description}</p>
+                  {project.image && (
 
-              <span>{project.tech}</span>
+                    <img
+                      src={project.image}
+                      className=
+                      "project-image"
+                      alt={
+                        project.title
+                      }
+                    />
 
-              <div className="project-buttons">
+                  )}
 
-                <button>
-                  <FaGithub />
-                  GitHub
-                </button>
+                  <h2>
+                    {project.title}
+                  </h2>
 
-                <button>
-                  <FiExternalLink />
-                  Live Demo
-                </button>
+                  <p>
+                    {
+                      project.description
+                    }
+                  </p>
+
+                  <span>
+                    {project.tech}
+                  </span>
+
+                  <div
+                    className=
+                    "project-buttons"
+                  >
+
+                    <a
+                      href={
+                        project.github
+                      }
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      GitHub
+                    </a>
+
+                    <a
+                      href={
+                        project.live
+                      }
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Live Demo
+                    </a>
+
+                  </div>
+
+                </div>
 
               </div>
 
-            </div>
-
-          ))}
+            ))}
 
         </div>
+
+        <button
+          className=
+          "carousel-control-prev"
+          type="button"
+          data-bs-target=
+          "#projectCarousel"
+          data-bs-slide=
+          "prev"
+        >
+
+          <span
+            className=
+            "carousel-control-prev-icon"
+          ></span>
+
+        </button>
+
+        <button
+          className=
+          "carousel-control-next"
+          type="button"
+          data-bs-target=
+          "#projectCarousel"
+          data-bs-slide=
+          "next"
+        >
+
+          <span
+            className=
+            "carousel-control-next-icon"
+          ></span>
+
+        </button>
 
       </div>
 
     </section>
+
   );
+
 };
 
 export default Projects;
