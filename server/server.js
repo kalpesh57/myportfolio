@@ -5,6 +5,8 @@ const projectRoutes = require("./routes/projectRoutes");
 const skillRoutes = require("./routes/skillRoutes");
 const certificateRoutes = require("./routes/certificateRoutes");
 const authRoutes = require("./routes/authRoutes");
+const resumeRoutes =
+  require("./routes/resumeRoutes");
 const contactRoutes = require("./routes/contactRoutes");
 const path = require("path");
 const express = require("express");
@@ -23,6 +25,10 @@ app.use("/api/profile", profileRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/skills", skillRoutes);
 app.use("/api/certificates", certificateRoutes);
+app.use(
+  "/api/resume",
+  resumeRoutes
+);
 app.use("/api/hero", heroRoutes);
 
 app.use(

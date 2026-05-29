@@ -1,3 +1,4 @@
+import Resume from "../pages/Resume";
 import {
   Routes,
   Route,
@@ -20,6 +21,10 @@ const AppRoutes = () => {
       <Route
         path="/"
         element={<Home />}
+      />
+      <Route
+        path="/resume"
+        element={<Resume />}
       />
 
       <Route

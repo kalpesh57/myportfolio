@@ -42,12 +42,11 @@ const Admin = () => {
   useEffect(() => {
 
     fetchProjects();
-
     fetchMessages();
-
     fetchHero();
-
     fetchSkills();
+    fetchCertificates();
+    fetchResume();
 
   }, []);
   const [messages, setMessages] =
@@ -350,8 +349,24 @@ const Admin = () => {
       image: "",
     });
 
+
   const [editingCertificateId,
     setEditingCertificateId] =
+    useState(null);
+  const [resumeTitle,
+    setResumeTitle] =
+    useState("");
+
+  const [resumeFile,
+    setResumeFile] =
+    useState(null);
+
+  const [resume,
+    setResume] =
+    useState(null);
+
+  const [editingResumeId,
+    setEditingResumeId] =
     useState(null);
 
   const updateSkill = async (e) => {
@@ -397,6 +412,155 @@ const Admin = () => {
         setCertificates(
           response.data
         );
+
+      } catch (error) {
+
+        console.log(error);
+
+      }
+
+    };
+  const fetchResume =
+    async () => {
+
+      try {
+
+        const response =
+          await axios.get(
+            "http://localhost:5000/api/resume"
+          );
+
+        setResume(
+          response.data
+        );
+
+      } catch (error) {
+
+        console.log(error);
+
+      }
+
+    };
+  const addResume =
+    async (e) => {
+
+      e.preventDefault();
+
+      const formData =
+        new FormData();
+
+      formData.append(
+        "title",
+        resumeTitle
+      );
+
+      formData.append(
+        "resume",
+        resumeFile
+      );
+
+      try {
+
+        await axios.post(
+          "http://localhost:5000/api/resume",
+          formData
+        );
+
+        alert(
+          "Resume Uploaded"
+        );
+
+        fetchResume();
+
+        setResumeTitle("");
+
+        setResumeFile(null);
+
+      } catch (error) {
+
+        console.log(error);
+
+      }
+
+    };
+  const deleteResume =
+    async (id) => {
+
+      try {
+
+        await axios.delete(
+          `http://localhost:5000/api/resume/${id}`
+        );
+
+        alert(
+          "Resume Deleted"
+        );
+
+        setResume(null);
+
+        fetchResume();
+
+      } catch (error) {
+
+        console.log(error);
+
+      }
+
+    };
+  const editResume =
+    (resume) => {
+
+      setResumeTitle(
+        resume.title
+      );
+
+      setEditingResumeId(
+        resume._id
+      );
+
+    };
+  const updateResume =
+    async (e) => {
+
+      e.preventDefault();
+
+      const formData =
+        new FormData();
+
+      formData.append(
+        "title",
+        resumeTitle
+      );
+
+      if (resumeFile) {
+
+        formData.append(
+          "resume",
+          resumeFile
+        );
+
+      }
+
+      try {
+
+        await axios.put(
+          `http://localhost:5000/api/resume/${editingResumeId}`,
+          formData
+        );
+
+        alert(
+          "Resume Updated"
+        );
+
+        setEditingResumeId(
+          null
+        );
+
+        setResumeTitle("");
+
+        setResumeFile(null);
+
+        fetchResume();
 
       } catch (error) {
 
@@ -684,6 +848,13 @@ const Admin = () => {
           }
         >
           Certificates
+        </button>
+        <button
+          onClick={() =>
+            setActiveSection("resume")
+          }
+        >
+          Resume
         </button>
 
         <button
@@ -1146,6 +1317,107 @@ const Admin = () => {
                 ))}
 
             </div>
+
+          </div>
+
+        )}
+
+        {/* RESUME */}
+
+        {activeSection === "resume" && (
+
+          <div className="cms-section">
+
+            <h1>
+              Resume
+            </h1>
+
+            <form
+              className="cms-form"
+              onSubmit={
+                editingResumeId
+                  ? updateResume
+                  : addResume
+              }
+              encType="multipart/form-data"
+            >
+
+              <input
+                type="text"
+                placeholder="Resume Title"
+                value={resumeTitle}
+                onChange={(e) =>
+                  setResumeTitle(
+                    e.target.value
+                  )
+                }
+              />
+
+              <input
+                type="file"
+                accept=".pdf"
+                onChange={(e) =>
+                  setResumeFile(
+                    e.target.files[0]
+                  )
+                }
+              />
+
+              <button type="submit">
+
+                {
+                  editingResumeId
+                    ? "Update Resume"
+                    : "Upload Resume"
+                }
+
+              </button>
+
+            </form>
+
+            {resume && (
+
+              <div className="project-item">
+
+                <h3>
+                  {resume.title}
+                </h3>
+
+                <br />
+
+                <a
+                  href={resume.resumeFile}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  View Resume
+                </a>
+
+                <br /><br />
+
+                <button
+                  onClick={() =>
+                    editResume(
+                      resume
+                    )
+                  }
+                >
+                  Edit
+                </button>
+
+                <button
+                  onClick={() =>
+                    deleteResume(
+                      resume._id
+                    )
+                  }
+                >
+                  Delete
+                </button>
+
+              </div>
+
+            )}
 
           </div>
 

@@ -4,6 +4,17 @@ import { useEffect, useState } from "react";
 
 import axios from "axios";
 
+import { Link }
+  from "react-router-dom";
+import {
+  FaUser,
+  FaCode,
+  FaRocket,
+  FaCertificate,
+  FaEnvelope,
+  FaFilePdf,
+} from "react-icons/fa";
+
 const Navbar = () => {
 
   const [profile, setProfile] =
@@ -40,15 +51,29 @@ const Navbar = () => {
 
         {profile?.image ? (
 
-          <img
-            src={profile.image}
-            alt="profile"
-            className="profile-image"
-          />
+          <>
+            <img
+              src={profile.image}
+              alt="profile"
+              className="profile-image"
+            />
+
+            <h3 className="profile-name">
+              Kalpesh Parmar
+            </h3>
+          </>
 
         ) : (
 
-          "KP"
+          <>
+            <div className="profile-placeholder">
+              KP
+            </div>
+
+            <h3 className="profile-name">
+              Kalpesh Parmar
+            </h3>
+          </>
 
         )}
 
@@ -57,34 +82,54 @@ const Navbar = () => {
       <ul className="nav-links">
 
         <li>
-          <a href="#about">About</a>
+          <a href="#about">
+            <FaUser />
+            <span>About</span>
+          </a>
         </li>
 
         <li>
           <a href="#skills">
-            Skills
+            <FaCode />
+            <span>Skills</span>
           </a>
         </li>
 
-
         <li>
-
           <a href="#projects">
-            Projects
+            <FaRocket />
+            <span>Projects</span>
           </a>
-
         </li>
-        <li>
 
+        <li>
           <a href="#certificates">
-            Certificates
+            <FaCertificate />
+            <span>Certificates</span>
           </a>
-
         </li>
 
-
         <li>
-          <a href="#contact">Contact</a>
+          <a href="#contact">
+            <FaEnvelope />
+            <span>Contact</span>
+          </a>
+        </li>
+        <li>
+
+          <Link
+            to="/resume"
+            className="resume-nav-btn"
+          >
+
+            <FaFilePdf />
+
+            <span>
+              Resume
+            </span>
+
+          </Link>
+
         </li>
 
       </ul>
