@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 
 import axios from "axios";
 
-import { Link }
-  from "react-router-dom";
+import { Link } from "react-router-dom";
+
 import {
   FaUser,
   FaCode,
@@ -13,12 +13,17 @@ import {
   FaCertificate,
   FaEnvelope,
   FaFilePdf,
+  FaBars,
+  FaTimes,
 } from "react-icons/fa";
 
 const Navbar = () => {
 
   const [profile, setProfile] =
     useState(null);
+
+  const [menuOpen, setMenuOpen] =
+    useState(false);
 
   useEffect(() => {
 
@@ -31,7 +36,7 @@ const Navbar = () => {
     try {
 
       const response = await axios.get(
-        "http://localhost:5000/api/profile"
+        `${import.meta.env.VITE_API_URL}/profile`
       );
 
       setProfile(response.data);
@@ -45,6 +50,7 @@ const Navbar = () => {
   };
 
   return (
+
     <nav className="navbar">
 
       <div className="logo">
@@ -79,47 +85,127 @@ const Navbar = () => {
 
       </div>
 
-      <ul className="nav-links">
+      <div
+        className="menu-icon"
+        onClick={() =>
+          setMenuOpen(!menuOpen)
+        }
+      >
+
+        {menuOpen
+          ? <FaTimes />
+          : <FaBars />}
+
+      </div>
+
+      <ul
+        className={`nav-links ${menuOpen ? "active" : ""
+          }`}
+      >
 
         <li>
-          <a href="#about">
+
+          <a
+            href="#about"
+            onClick={() =>
+              setMenuOpen(false)
+            }
+          >
+
             <FaUser />
-            <span>About</span>
+
+            <span>
+              About
+            </span>
+
           </a>
+
         </li>
 
         <li>
-          <a href="#skills">
+
+          <a
+            href="#skills"
+            onClick={() =>
+              setMenuOpen(false)
+            }
+          >
+
             <FaCode />
-            <span>Skills</span>
+
+            <span>
+              Skills
+            </span>
+
           </a>
+
         </li>
 
         <li>
-          <a href="#projects">
+
+          <a
+            href="#projects"
+            onClick={() =>
+              setMenuOpen(false)
+            }
+          >
+
             <FaRocket />
-            <span>Projects</span>
+
+            <span>
+              Projects
+            </span>
+
           </a>
+
         </li>
 
         <li>
-          <a href="#certificates">
+
+          <a
+            href="#certificates"
+            onClick={() =>
+              setMenuOpen(false)
+            }
+          >
+
             <FaCertificate />
-            <span>Certificates</span>
+
+            <span>
+              Certificates
+            </span>
+
           </a>
+
         </li>
 
         <li>
-          <a href="#contact">
+
+          <a
+            href="#contact"
+            onClick={() =>
+              setMenuOpen(false)
+            }
+          >
+
             <FaEnvelope />
-            <span>Contact</span>
+
+            <span>
+              Contact
+            </span>
+
           </a>
+
         </li>
+
         <li>
 
           <Link
             to="/resume"
             className="resume-nav-btn"
+            onClick={() =>
+              setMenuOpen(false)
+            }
           >
 
             <FaFilePdf />
@@ -135,7 +221,9 @@ const Navbar = () => {
       </ul>
 
     </nav>
+
   );
+
 };
 
 export default Navbar;

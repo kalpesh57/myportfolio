@@ -29,10 +29,10 @@ const Contact = () => {
 
       setLoading(true);
 
-      const response = await axios.post(
-        "http://localhost:5000/api/contact",
-        formData
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/contact`
       );
+
 
       alert(response.data.message);
 

@@ -30,6 +30,10 @@ const Certificates = () => {
     setCertificates] =
     useState([]);
 
+  const [selectedCertificate,
+    setSelectedCertificate] =
+    useState(null);
+
   useEffect(() => {
 
     fetchCertificates();
@@ -39,24 +43,23 @@ const Certificates = () => {
   const fetchCertificates =
     async () => {
 
-    try {
+      try {
 
-      const response =
-        await axios.get(
-          "http://localhost:5000/api/certificates"
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/certificates`
         );
 
-      setCertificates(
-        response.data
-      );
+        setCertificates(
+          response.data
+        );
 
-    } catch (error) {
+      } catch (error) {
 
-      console.log(error);
+        console.log(error);
 
-    }
+      }
 
-  };
+    };
 
   return (
 
@@ -65,34 +68,57 @@ const Certificates = () => {
       id="certificates"
     >
 
-      <h1>
-        Certificates
-      </h1>
+      <div className="certificate-header">
+
+        <span className="certificate-tag">
+          VERIFIED ACHIEVEMENTS
+        </span>
+
+        <h1>
+          Professional Certificates
+        </h1>
+
+        <p>
+          Industry-recognized certifications
+          showcasing my technical skills,
+          continuous learning, and
+          professional development.
+        </p>
+
+      </div>
 
       <Swiper
 
-        effect={"coverflow"}
+        effect={"slide"}
 
         grabCursor={true}
 
         centeredSlides={true}
 
-        slidesPerView={"auto"}
+        slidesPerView={3}
+        breakpoints={{
 
-        loop={true}
+          320: {
+            slidesPerView: 1,
+          },
+
+          768: {
+            slidesPerView: 2,
+          },
+
+          1200: {
+            slidesPerView: 3,
+          },
+
+        }}
+
+        loop={certificates.length > 3}
 
         autoplay={{
           delay: 2500,
           disableOnInteraction: false,
         }}
 
-        coverflowEffect={{
-          rotate: 20,
-          stretch: 0,
-          depth: 150,
-          modifier: 2.5,
-          slideShadows: true,
-        }}
 
         pagination={{
           clickable: true,
@@ -110,48 +136,83 @@ const Certificates = () => {
         {certificates.map(
           (certificate) => (
 
-          <SwiperSlide
-            key={certificate._id}
-            className=
-            "certificate-slide"
-          >
-
-            <div
+            <SwiperSlide
+              key={certificate._id}
               className=
-              "certificate-card"
+              "certificate-slide"
             >
 
-              <img
-                src={certificate.image}
-                alt={certificate.title}
+              <div
                 className=
-                "certificate-image"
-              />
+                "certificate-card"
+              >
 
-              <h3>
-                {certificate.title}
-              </h3>
+                <img
+                  src={certificate.image}
+                  alt={certificate.title}
+                  className="certificate-image"
+                  onClick={() =>
+                    setSelectedCertificate(
+                      certificate.image
+                    )
+                  }
+                />
 
-              <p>
-                {
-                  certificate.organization
-                }
-              </p>
+                <h3>
+                  {certificate.title}
+                </h3>
 
-              <span>
-                {
-                  certificate.issueDate
-                }
-              </span>
+                <p>
+                  {
+                    certificate.organization
+                  }
+                </p>
 
-            </div>
+                <span>
+                  {
+                    certificate.issueDate
+                  }
+                </span>
 
-          </SwiperSlide>
+              </div>
 
-        ))}
+            </SwiperSlide>
+
+          ))}
 
       </Swiper>
+      {selectedCertificate && (
 
+        <div
+          className="certificate-modal"
+          onClick={() =>
+            setSelectedCertificate(
+              null
+            )
+          }
+        >
+          <button
+            className="close-modal"
+            onClick={() =>
+              setSelectedCertificate(
+                null
+              )
+            }
+          >
+            ✕
+          </button>
+
+          <img
+            src={selectedCertificate}
+            alt="Certificate"
+            className="modal-image"
+            onClick={(e) =>
+              e.stopPropagation()
+            }
+          />
+        </div>
+
+      )}
     </section>
 
   );

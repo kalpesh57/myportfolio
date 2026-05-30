@@ -23,7 +23,7 @@ const Dashboard = () => {
     try {
 
       await axios.post(
-        "http://localhost:5000/api/profile/upload",
+        `${API_URL}/profile/upload`,
         formData
       );
 

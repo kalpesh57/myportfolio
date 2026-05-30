@@ -3,29 +3,78 @@ const express = require("express");
 const router = express.Router();
 
 const Project = require("../models/Project");
+const multer = require("multer");
 
-router.post("/", async (req, res) => {
+const storage = multer.diskStorage({
 
-  try {
+  destination: (req, file, cb) => {
 
-    const project =
-      new Project(req.body);
+    
+cb(null, "uploads/");
 
-    await project.save();
 
-    res.status(201).json({
-      message: "Project Added",
-    });
+  },
 
-  } catch (error) {
+  filename: (req, file, cb) => {
 
-    res.status(500).json({
-      error: error.message,
-    });
+    
+cb(
+  null,
+  Date.now() +
+  "-" +
+  file.originalname
+);
 
-  }
+
+  },
 
 });
+
+const upload = multer({
+  storage,
+});
+
+
+router.post(
+  "/",
+  upload.single("image"),
+  async (req, res) => {
+
+    try {
+
+      const project =
+        new Project({
+
+          title: req.body.title,
+
+          description: req.body.description,
+
+          tech: req.body.tech,
+
+          github: req.body.github,
+
+          live: req.body.live,
+
+          image: req.file
+            ? `http://localhost:5000/uploads/${req.file.filename}`
+            : "",
+
+        });
+
+      await project.save();
+
+      res.status(201).json({
+        message: "Project Added",
+      });
+
+    } catch (error) {
+
+      res.status(500).json({
+        error: error.message,
+      });
+
+    }
+  });
 
 router.get("/", async (req, res) => {
 

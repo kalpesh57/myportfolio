@@ -1,0 +1,202 @@
+.footer {
+
+  padding: 35px 10%;
+
+  border-top:
+    1px solid rgba(255,255,255,0.08);
+
+  background:
+    rgba(15,23,42,0.85);
+
+  text-align: center;
+
+  position: relative;
+
+}
+
+.footer-content {
+
+  max-width: 900px;
+
+  margin: auto;
+
+}
+
+.footer-links {
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  gap: 25px;
+
+  margin-bottom: 20px;
+
+}
+
+.social-btn {
+
+  width: 60px;
+
+  height: 60px;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  border-radius: 18px;
+
+  font-size: 1.7rem;
+
+  color: white;
+
+  text-decoration: none;
+
+  background:
+    rgba(255,255,255,0.05);
+
+  border:
+    1px solid rgba(255,255,255,0.08);
+
+  transition: 0.4s;
+
+  backdrop-filter: blur(10px);
+
+}
+
+.social-btn:hover {
+
+  transform:
+    translateY(-8px)
+    scale(1.08);
+
+}
+
+.github:hover {
+
+  background: #24292e;
+
+  box-shadow:
+    0 0 30px
+    rgba(255,255,255,0.25);
+
+}
+
+.linkedin:hover {
+
+  background: #0077b5;
+
+  box-shadow:
+    0 0 30px
+    rgba(0,119,181,0.5);
+
+}
+
+.email:hover {
+
+  background: #ea4335;
+
+  box-shadow:
+    0 0 30px
+    rgba(234,67,53,0.5);
+
+}
+
+.copyright {
+
+  color: #94a3b8;
+
+  font-size: 0.9rem;
+
+  margin-top: 10px;
+
+}
+
+.back-to-top {
+
+  position: fixed;
+
+  bottom: 25px;
+
+  right: 25px;
+
+  width: 55px;
+
+  height: 55px;
+
+  border: none;
+
+  border-radius: 50%;
+
+  background: #915EFF;
+
+  color: white;
+
+  font-size: 1.3rem;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  z-index: 1000;
+
+  transition: 0.3s;
+
+  box-shadow:
+    0 10px 25px
+    rgba(145,94,255,0.35);
+
+}
+
+.back-to-top:hover {
+
+  transform:
+    translateY(-5px);
+
+  background: #00ffff;
+
+  color: black;
+
+}
+
+@media (max-width: 768px) {
+
+  .footer {
+
+    padding: 25px 5%;
+
+  }
+
+  .footer-links {
+
+    gap: 15px;
+
+  }
+
+  .social-btn {
+
+    width: 52px;
+
+    height: 52px;
+
+    font-size: 1.4rem;
+
+  }
+
+  .back-to-top {
+
+    width: 48px;
+
+    height: 48px;
+
+    right: 15px;
+
+    bottom: 15px;
+
+  }
+
+}

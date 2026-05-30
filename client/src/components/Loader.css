@@ -1,0 +1,163 @@
+.loader {
+
+  position: fixed;
+
+  inset: 0;
+
+  background: #020617;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  overflow: hidden;
+
+  z-index: 99999;
+
+}
+
+.loader-canvas {
+
+  position: absolute;
+
+  inset: 0;
+
+}
+
+.loader-content {
+
+  position: relative;
+
+  z-index: 10;
+
+  text-align: center;
+
+}
+
+.loader-content h1 {
+
+  font-size: 5rem;
+
+  font-weight: 800;
+
+  letter-spacing: 5px;
+
+  background:
+    linear-gradient(90deg,
+      #ffffff,
+      #915EFF,
+      #00ffff);
+
+  -webkit-background-clip: text;
+
+  -webkit-text-fill-color: transparent;
+
+  animation:
+    fadeUp 1.5s ease;
+
+}
+
+.loader-content {
+
+  position: relative;
+
+  z-index: 10;
+
+  text-align: center;
+
+  animation:
+    pulseGlow 2s infinite;
+
+}
+
+.loader-content p {
+
+  margin-top: 15px;
+
+  color: #00ffff;
+
+  letter-spacing: 8px;
+
+  font-size: 1.2rem;
+
+  animation:
+    fadeUp 2s ease;
+
+}
+
+@keyframes fadeUp {
+
+  from {
+
+    opacity: 0;
+
+    transform:
+      translateY(40px);
+
+  }
+
+  to {
+
+    opacity: 1;
+
+    transform:
+      translateY(0);
+
+  }
+
+}
+
+@media (max-width:768px) {
+
+  .loader-content h1 {
+
+    font-size: 2.5rem;
+
+    letter-spacing: 2px;
+
+  }
+
+  .loader-content p {
+
+    font-size: 0.9rem;
+
+    letter-spacing: 4px;
+
+  }
+
+}
+@keyframes pulseGlow {
+
+  0% {
+
+    filter:
+      drop-shadow(
+        0 0 10px
+        rgba(145,94,255,0.3)
+      );
+
+  }
+
+  50% {
+
+    filter:
+      drop-shadow(
+        0 0 30px
+        rgba(145,94,255,0.8)
+      );
+
+  }
+
+  100% {
+
+    filter:
+      drop-shadow(
+        0 0 10px
+        rgba(145,94,255,0.3)
+      );
+
+  }
+
+}

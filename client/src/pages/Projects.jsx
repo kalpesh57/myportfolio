@@ -24,10 +24,9 @@ const Projects = () => {
 
       try {
 
-        const response =
-          await axios.get(
-            "http://localhost:5000/api/projects"
-          );
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/projects`
+        );
 
         setProjects(
           response.data
@@ -48,9 +47,24 @@ const Projects = () => {
       id="projects"
     >
 
-      <h1>
-        Projects
-      </h1>
+      <div className="projects-header">
+
+        <span className="projects-tag">
+          FEATURED WORK
+        </span>
+
+        <h1>
+          My Projects
+        </h1>
+
+        <p>
+          A collection of projects showcasing
+          my skills in full-stack development,
+          problem solving, and modern web
+          technologies.
+        </p>
+
+      </div>
 
       <div
         id="projectCarousel"
@@ -76,8 +90,8 @@ const Projects = () => {
                 key={project._id}
 
                 className={`carousel-item ${index === 0
-                    ? "active"
-                    : ""
+                  ? "active"
+                  : ""
                   }`}
               >
 

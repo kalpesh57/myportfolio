@@ -1,8 +1,15 @@
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Stars } from "@react-three/drei";
+
+import {
+  OrbitControls,
+  Stars,
+  Float,
+} from "@react-three/drei";
 
 const ParticleBackground = () => {
+
   return (
+
     <div
       style={{
         position: "fixed",
@@ -13,9 +20,20 @@ const ParticleBackground = () => {
         zIndex: -1,
       }}
     >
+
       <Canvas>
 
-        <ambientLight intensity={1} />
+        <ambientLight intensity={0.8} />
+
+        <pointLight
+          position={[10, 10, 10]}
+          color="#915EFF"
+        />
+
+        <pointLight
+          position={[-10, -10, -10]}
+          color="#00ffff"
+        />
 
         <Stars
           radius={100}
@@ -27,15 +45,40 @@ const ParticleBackground = () => {
           speed={1}
         />
 
+        <Float
+          speed={2}
+          rotationIntensity={2}
+          floatIntensity={2}
+        >
+
+          <mesh>
+
+            <icosahedronGeometry
+              args={[2, 1]}
+            />
+
+            <meshStandardMaterial
+              color="#915EFF"
+              wireframe
+            />
+
+          </mesh>
+
+        </Float>
+
         <OrbitControls
           enableZoom={false}
+          enablePan={false}
           autoRotate
-          autoRotateSpeed={0.5}
+          autoRotateSpeed={1}
         />
 
       </Canvas>
+
     </div>
+
   );
+
 };
 
 export default ParticleBackground;

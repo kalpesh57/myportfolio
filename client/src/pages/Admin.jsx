@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 import axios from "axios";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Admin = () => {
 
@@ -36,6 +37,9 @@ const Admin = () => {
       github: "",
       live: "",
     });
+  const [projectImage,
+    setProjectImage] =
+    useState(null);
   const [editingProjectId,
     setEditingProjectId] =
     useState(null);
@@ -72,7 +76,7 @@ const Admin = () => {
     try {
 
       const response = await axios.get(
-        "http://localhost:5000/api/projects"
+        `${API_URL}/projects`
       );
 
       setProjects(response.data);
@@ -91,15 +95,57 @@ const Admin = () => {
 
     try {
 
+      const formData =
+        new FormData();
+
+      formData.append(
+        "title",
+        projectData.title
+      );
+
+      formData.append(
+        "description",
+        projectData.description
+      );
+
+      formData.append(
+        "tech",
+        projectData.tech
+      );
+
+      formData.append(
+        "github",
+        projectData.github
+      );
+
+      formData.append(
+        "live",
+        projectData.live
+      );
+
+      if (projectImage) {
+
+        formData.append(
+          "image",
+          projectImage
+        );
+
+      }
+
       await axios.post(
-        "http://localhost:5000/api/projects",
-        projectData
+        `${API_URL}/projects`,
+        formData,
+        {
+          headers: {
+            "Content-Type":
+              "multipart/form-data",
+          },
+        }
       );
 
       alert("Project Added");
 
       fetchProjects();
-
 
       setProjectData({
         title: "",
@@ -108,6 +154,8 @@ const Admin = () => {
         github: "",
         live: "",
       });
+
+      setProjectImage(null);
 
     } catch (error) {
 
@@ -122,7 +170,7 @@ const Admin = () => {
     try {
 
       await axios.delete(
-        `http://localhost:5000/api/projects/${id}`
+        `${API_URL}/projects/${id}`
       );
 
       alert("Project Deleted");
@@ -159,9 +207,53 @@ const Admin = () => {
 
     try {
 
+      const formData =
+        new FormData();
+
+      formData.append(
+        "title",
+        projectData.title
+      );
+
+      formData.append(
+        "description",
+        projectData.description
+      );
+
+      formData.append(
+        "tech",
+        projectData.tech
+      );
+
+      formData.append(
+        "github",
+        projectData.github
+      );
+
+      formData.append(
+        "live",
+        projectData.live
+      );
+
+      if (projectImage) {
+
+        formData.append(
+          "image",
+          projectImage
+        );
+
+      }
+
       await axios.put(
-        `http://localhost:5000/api/projects/${editingProjectId}`,
-        projectData
+        
+        `${API_URL}/projects/${editingProjectId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type":
+              "multipart/form-data",
+          },
+        }
       );
 
       alert("Project Updated");
@@ -172,10 +264,11 @@ const Admin = () => {
         title: "",
         description: "",
         tech: "",
-        image: "",
         github: "",
         live: "",
       });
+
+      setProjectImage(null);
 
       fetchProjects();
 
@@ -192,7 +285,7 @@ const Admin = () => {
     try {
 
       const response = await axios.get(
-        "http://localhost:5000/api/contact"
+        `${API_URL}/contact`
       );
 
       setMessages(response.data);
@@ -210,7 +303,7 @@ const Admin = () => {
     try {
 
       await axios.delete(
-        `http://localhost:5000/api/contact/${id}`
+        `${API_URL}/contact/${id}`
       );
 
       alert("Message Deleted");
@@ -229,7 +322,7 @@ const Admin = () => {
     try {
 
       const response = await axios.get(
-        "http://localhost:5000/api/hero"
+        `${API_URL}/hero`
       );
 
       setHeroData(response.data);
@@ -249,7 +342,7 @@ const Admin = () => {
     try {
 
       await axios.post(
-        "http://localhost:5000/api/hero",
+        `${API_URL}/hero`,
         heroData
       );
 
@@ -267,7 +360,7 @@ const Admin = () => {
     try {
 
       const response = await axios.get(
-        "http://localhost:5000/api/skills"
+        `${API_URL}/skills`
       );
 
       setSkills(response.data);
@@ -287,7 +380,7 @@ const Admin = () => {
     try {
 
       await axios.post(
-        "http://localhost:5000/api/skills",
+        `${API_URL}/skills`,
         {
           name: skillName,
         }
@@ -312,7 +405,7 @@ const Admin = () => {
     try {
 
       await axios.delete(
-        `http://localhost:5000/api/skills/${id}`
+        `${API_URL}/skills/${id}`
       );
 
       alert("Skill Deleted");
@@ -348,7 +441,9 @@ const Admin = () => {
       issueDate: "",
       image: "",
     });
-
+  const [certificateImage,
+    setCertificateImage] =
+    useState(null);
 
   const [editingCertificateId,
     setEditingCertificateId] =
@@ -376,7 +471,7 @@ const Admin = () => {
     try {
 
       await axios.put(
-        `http://localhost:5000/api/skills/${editingSkillId}`,
+        `${API_URL}/skills/${editingSkillId}`,
         {
           name: skillName,
         }
@@ -406,7 +501,8 @@ const Admin = () => {
 
         const response =
           await axios.get(
-            "http://localhost:5000/api/certificates"
+            `${API_URL}/certificates`
+
           );
 
         setCertificates(
@@ -427,7 +523,7 @@ const Admin = () => {
 
         const response =
           await axios.get(
-            "http://localhost:5000/api/resume"
+            `${API_URL}/resume`
           );
 
         setResume(
@@ -462,7 +558,7 @@ const Admin = () => {
       try {
 
         await axios.post(
-          "http://localhost:5000/api/resume",
+          `${API_URL}/resume`,
           formData
         );
 
@@ -489,7 +585,7 @@ const Admin = () => {
       try {
 
         await axios.delete(
-          `http://localhost:5000/api/resume/${id}`
+          `${API_URL}/resume/${id}`
         );
 
         alert(
@@ -544,7 +640,6 @@ const Admin = () => {
       try {
 
         await axios.put(
-          `http://localhost:5000/api/resume/${editingResumeId}`,
           formData
         );
 
@@ -577,9 +672,42 @@ const Admin = () => {
 
       try {
 
+        const formData =
+          new FormData();
+
+        formData.append(
+          "title",
+          certificateData.title
+        );
+
+        formData.append(
+          "organization",
+          certificateData.organization
+        );
+
+        formData.append(
+          "issueDate",
+          certificateData.issueDate
+        );
+
+        if (certificateImage) {
+
+          formData.append(
+            "image",
+            certificateImage
+          );
+
+        }
+
         await axios.post(
-          "http://localhost:5000/api/certificates",
-          certificateData
+          `${API_URL}/certificates`,
+          formData,
+          {
+            headers: {
+              "Content-Type":
+                "multipart/form-data",
+            },
+          }
         );
 
         alert(
@@ -592,8 +720,11 @@ const Admin = () => {
           title: "",
           organization: "",
           issueDate: "",
-          image: "",
         });
+
+        setCertificateImage(
+          null
+        );
 
       } catch (error) {
 
@@ -609,7 +740,7 @@ const Admin = () => {
       try {
 
         await axios.delete(
-          `http://localhost:5000/api/certificates/${id}`
+          `${API_URL}/certificates/${id}`
         );
 
         alert(
@@ -651,9 +782,42 @@ const Admin = () => {
 
       try {
 
+        const formData =
+          new FormData();
+
+        formData.append(
+          "title",
+          certificateData.title
+        );
+
+        formData.append(
+          "organization",
+          certificateData.organization
+        );
+
+        formData.append(
+          "issueDate",
+          certificateData.issueDate
+        );
+
+        if (certificateImage) {
+
+          formData.append(
+            "image",
+            certificateImage
+          );
+
+        }
+
         await axios.put(
-          `http://localhost:5000/api/certificates/${editingCertificateId}`,
-          certificateData
+          `${API_URL}/certificates/${editingCertificateId}`,
+          formData,
+          {
+            headers: {
+              "Content-Type":
+                "multipart/form-data",
+            },
+          }
         );
 
         alert(
@@ -668,8 +832,11 @@ const Admin = () => {
           title: "",
           organization: "",
           issueDate: "",
-          image: "",
         });
+
+        setCertificateImage(
+          null
+        );
 
         fetchCertificates();
 
@@ -680,7 +847,6 @@ const Admin = () => {
       }
 
     };
-
   // LOGIN
 
   const handleLogin = async (e) => {
@@ -690,7 +856,7 @@ const Admin = () => {
     try {
 
       const response = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        `${API_URL}/auth/login`,
         loginData
       );
 
@@ -725,7 +891,7 @@ const Admin = () => {
       try {
 
         await axios.post(
-          "http://localhost:5000/api/profile/upload",
+          `${API_URL}/profile/upload`,
           formData
         );
 
@@ -1104,17 +1270,14 @@ const Admin = () => {
               />
 
               <input
-                type="text"
-                placeholder="Project Image URL"
-                value={projectData.image}
+                type="file"
+                accept="image/*"
                 onChange={(e) =>
-                  setProjectData({
-                    ...projectData,
-                    image: e.target.value,
-                  })
+                  setProjectImage(
+                    e.target.files[0]
+                  )
                 }
               />
-
               <input
                 type="text"
                 placeholder="GitHub Link"
@@ -1249,17 +1412,14 @@ const Admin = () => {
               />
 
               <input
-                type="text"
-                placeholder="Certificate Image URL"
-                value={certificateData.image}
+                type="file"
+                accept="image/*"
                 onChange={(e) =>
-                  setCertificateData({
-                    ...certificateData,
-                    image: e.target.value,
-                  })
+                  setCertificateImage(
+                    e.target.files[0]
+                  )
                 }
               />
-
               <button type="submit">
 
                 {editingCertificateId

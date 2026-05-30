@@ -1,75 +1,201 @@
-.resume-page{
+.resume-page {
 
-  min-height:100vh;
+  min-height: 100vh;
 
-  padding:120px 10%;
+  padding: 120px 10%;
 
-  text-align:center;
-
-}
-
-.resume-page h1{
-
-  color:#915EFF;
-
-  margin-bottom:30px;
+  text-align: center;
 
 }
 
-.resume-viewer{
+.resume-page h1 {
 
-  width:100%;
+  color: #915EFF;
 
-  height:900px;
-
-  border:none;
-
-  border-radius:20px;
-
-  background:white;
+  margin-bottom: 30px;
 
 }
 
-.back-btn{
+.resume-viewer {
 
-  display:inline-block;
+  width: 100%;
 
-  margin-bottom:30px;
+  height: 900px;
 
-  text-decoration:none;
+  border: none;
 
-  color:#00ffff;
+  border-radius: 20px;
 
-  font-weight:bold;
-
-}
-
-.download-btn{
-
-  display:inline-block;
-
-  margin-top:30px;
-
-  padding:15px 30px;
-
-  border:none;
-
-  border-radius:12px;
-
-  background:#915EFF;
-
-  color:white;
-
-  text-decoration:none;
-
-  transition:.3s;
+  background: white;
 
 }
 
-.download-btn:hover{
+.back-btn {
 
-  background:#00ffff;
+  position: absolute;
 
-  color:black;
+  top: 30px;
+
+  left: 30px;
+
+  padding: 12px 24px;
+
+  background: #915EFF;
+
+  color: white;
+
+  text-decoration: none;
+
+  border-radius: 10px;
+
+  font-weight: 600;
+
+  transition: 0.3s;
+
+  box-shadow: 0 0 15px rgba(145, 94, 255, 0.4);
+
+}
+
+.back-btn:hover {
+
+  background: #7c4dff;
+
+  transform: translateY(-2px);
+
+}
+
+.download-btn {
+
+  display: inline-block;
+
+  margin-top: 30px;
+
+  padding: 15px 30px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  background: #915EFF;
+
+  color: white;
+
+  text-decoration: none;
+
+  transition: .3s;
+
+}
+
+.download-btn:hover {
+
+  background: #00ffff;
+
+  color: black;
+
+}
+
+.react-pdf__Page {
+
+  margin: 20px auto;
+
+}
+
+.react-pdf__Page canvas {
+
+  max-width: 100%;
+
+  height: auto !important;
+
+}
+
+.resume-container {
+
+  width: 100%;
+
+  display: flex;
+
+  justify-content: center;
+
+  margin-top: 30px;
+
+}
+
+.react-pdf__Document {
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+}
+
+.react-pdf__Page {
+
+  margin-bottom: 25px;
+
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+
+}
+
+.react-pdf__Page canvas {
+
+  max-width: 100%;
+
+  height: auto !important;
+
+  border-radius: 10px;
+
+}
+
+.resume-text {
+
+  color: #ccc;
+
+  margin-bottom: 30px;
+
+  text-align: center;
+
+}
+
+.resume-actions {
+
+  text-align: center;
+
+  margin: 20px 0 30px;
+
+}
+
+.resume-container {
+
+  width: 100%;
+
+  display: flex;
+
+  justify-content: center;
+
+}
+
+.react-pdf__Document {
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+}
+
+.react-pdf__Page {
+
+  margin-bottom: 25px;
+
+  box-shadow: 0 0 25px rgba(0, 0, 0, .3);
+
+}
+
+.react-pdf__Page canvas {
+
+  border-radius: 10px;
 
 }

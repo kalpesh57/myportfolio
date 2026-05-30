@@ -4,29 +4,83 @@ const router = express.Router();
 
 const Certificate =
   require("../models/Certificate");
+const multer = require("multer");
 
-router.post("/", async (req, res) => {
+const storage = multer.diskStorage({
 
-  try {
+  destination: (req, file, cb) => {
 
-    const certificate =
-      new Certificate(req.body);
 
-    await certificate.save();
+    cb(null, "uploads/");
 
-    res.status(201).json({
-      message: "Certificate Added",
-    });
 
-  } catch (error) {
+  },
 
-    res.status(500).json({
-      error: error.message,
-    });
+  filename: (req, file, cb) => {
 
-  }
+
+    cb(
+      null,
+      Date.now() +
+      "-" +
+      file.originalname
+    );
+
+
+  },
 
 });
+
+const upload = multer({
+  storage,
+});
+
+router.post(
+  "/",
+  upload.single("image"),
+  async (req, res) => {
+    console.log("BODY:", req.body);
+    console.log("FILE:", req.file);
+    try {
+
+      const certificate =
+        new Certificate({
+
+          title:
+            req.body.title,
+
+          organization:
+            req.body.organization,
+
+          issueDate:
+            req.body.issueDate,
+
+          image:
+            req.file
+              ? "http://localhost:5000/uploads/" +
+              req.file.filename
+              : "",
+
+        });
+
+      await certificate.save();
+
+      res.status(201).json({
+        message: "Certificate Added",
+      });
+
+    } catch (error) {
+
+      console.log("CERTIFICATE ERROR:");
+      console.log(error);
+
+      res.status(500).json({
+        error: error.message,
+      });
+
+    }
+
+  });
 
 router.get("/", async (req, res) => {
 
@@ -49,30 +103,49 @@ router.get("/", async (req, res) => {
 
 });
 
-router.put("/:id", async (req, res) => {
+router.put(
+  "/:id",
+  upload.single("image"),
+  async (req, res) => {
 
-  try {
+    try {
 
-    const updatedCertificate =
-      await Certificate.findByIdAndUpdate(
-        req.params.id,
-        req.body,
-        { new: true }
+      const updatedCertificate =
+        await Certificate.findByIdAndUpdate(
+          req.params.id,
+
+          {
+            title:
+              req.body.title,
+
+            organization:
+              req.body.organization,
+
+            issueDate:
+              req.body.issueDate,
+
+            image:
+              req.file
+                ? "http://localhost:5000/uploads/" +
+                req.file.filename
+                : req.body.image,
+          },
+
+          { new: true }
+        );
+      res.status(200).json(
+        updatedCertificate
       );
 
-    res.status(200).json(
-      updatedCertificate
-    );
+    } catch (error) {
 
-  } catch (error) {
+      res.status(500).json({
+        error: error.message,
+      });
 
-    res.status(500).json({
-      error: error.message,
-    });
+    }
 
-  }
-
-});
+  });
 
 router.delete("/:id", async (req, res) => {
 

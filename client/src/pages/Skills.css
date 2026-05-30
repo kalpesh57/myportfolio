@@ -1,92 +1,301 @@
-.skills{
-  min-height:100vh;
-  padding:100px 10%;
-  position:relative;
-  z-index:2;
+.skills {
+
+  min-height: 100vh;
+
+  padding: 120px 10%;
+
+  position: relative;
+
+  z-index: 2;
+
 }
 
-.skills-content h2{
-  font-size:4rem;
-  margin-bottom:50px;
-  color:#915EFF;
+.skills h1 {
+
+  font-size: 5rem;
+
+  font-weight: 800;
+
+  text-align: center;
+
+  margin-bottom: 80px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 4px;
+
+  background: linear-gradient(90deg,
+      #ffffff,
+      #915EFF,
+      #00ffff);
+
+  -webkit-background-clip: text;
+
+  -webkit-text-fill-color: transparent;
+
+  text-shadow:
+    0 0 25px rgba(145, 94, 255, 0.5);
+
+  position: relative;
+
 }
 
-.skills-grid{
-  display:grid;
+.skills h1::after {
 
-  grid-template-columns:
-  repeat(auto-fit,minmax(300px,1fr));
+  content: "";
 
-  gap:30px;
+  position: absolute;
+
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  bottom: -15px;
+
+  width: 120px;
+
+  height: 4px;
+
+  border-radius: 50px;
+
+  background: linear-gradient(90deg,
+      #915EFF,
+      #00ffff);
+
+  box-shadow:
+    0 0 20px rgba(145, 94, 255, 0.8);
+
 }
 
-.skill-card{
-  padding:25px;
+.skill-category {
 
-  background:rgba(255,255,255,0.05);
+  margin-bottom: 60px;
 
-  border:1px solid rgba(255,255,255,0.1);
-
-  border-radius:20px;
-
-  transition:0.4s;
 }
 
-.skill-card:hover{
-  transform:translateY(-10px);
+.skill-category h2 {
 
-  box-shadow:0 0 30px rgba(145,94,255,0.3);
+  color: white;
+
+  font-size: 2rem;
+
+  margin-bottom: 25px;
+
+  position: relative;
+
+  display: inline-block;
+
 }
 
-.skill-header{
-  display:flex;
-  justify-content:space-between;
-  margin-bottom:15px;
+.skill-category h2::after {
+
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+
+  bottom: -8px;
+
+  width: 80px;
+
+  height: 3px;
+
+  border-radius: 20px;
+
+  background: linear-gradient(90deg,
+      #915EFF,
+      #00ffff);
+
 }
 
-.skill-header h3{
-  color:#00ffff;
+.skills-container {
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 18px;
+
 }
 
-.progress-bar{
-  width:100%;
-  height:10px;
+.skill-card {
 
-  background:rgba(255,255,255,0.1);
+  display: flex;
 
-  border-radius:20px;
+  align-items: center;
 
-  overflow:hidden;
+  gap: 10px;
+
+  padding: 14px 22px;
+
+  background: rgba(255, 255, 255, 0.05);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  border-radius: 50px;
+
+  color: white;
+
+  font-size: 1rem;
+
+  font-weight: 500;
+
+  width: fit-content;
+
+  cursor: pointer;
+
+  backdrop-filter: blur(10px);
+
+  -webkit-backdrop-filter: blur(10px);
+
+  transition: all 0.3s ease;
+
 }
 
-.progress{
-  height:100%;
+.skill-card:hover {
 
-  background:linear-gradient(
-    90deg,
-    #915EFF,
-    #00ffff
-  );
+  transform: translateY(-5px) scale(1.05);
 
-  border-radius:20px;
+  border-color: #915EFF;
 
-  animation:load 2s ease;
+  box-shadow:
+    0 0 25px rgba(145, 94, 255, 0.4);
+
 }
 
-@keyframes load{
-  from{
-    width:0;
+.skill-icon {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 1.4rem;
+
+  color: #00ffff;
+
+  transition: 0.3s;
+
+}
+
+.skill-card:hover .skill-icon {
+
+  transform: rotate(12deg) scale(1.15);
+
+  color: #915EFF;
+
+}
+
+/* Scroll Animation Feel */
+
+.skill-card {
+
+  animation: fadeInUp 0.6s ease;
+
+}
+
+@keyframes fadeInUp {
+
+  from {
+
+    opacity: 0;
+
+    transform: translateY(20px);
+
   }
-}
 
-@media(max-width:768px){
+  to {
 
-  .skills{
-    padding:100px 8%;
+    opacity: 1;
+
+    transform: translateY(0);
+
   }
 
-  .skills-content h2{
-    font-size:3rem;
+}
+
+/* Tablet */
+
+@media (max-width: 992px) {
+
+  .skills {
+
+    padding: 100px 8%;
+
+  }
+
+  .skills h1 {
+
+    font-size: 3.5rem;
+
+  }
+
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+
+  .skills {
+
+    padding: 90px 6%;
+
+  }
+
+  .skills h1 {
+
+    font-size: 3.5rem;
+
+    letter-spacing: 2px;
+
+  }
+
+  .skill-category h2 {
+
+    font-size: 1.5rem;
+
+  }
+
+  .skills-container {
+
+    gap: 12px;
+
+  }
+
+  .skill-card {
+
+    padding: 10px 16px;
+
+    font-size: 0.9rem;
+
+  }
+
+  .skill-icon {
+
+    font-size: 1.1rem;
+
+  }
+
+}
+
+/* Small Phones */
+
+@media (max-width: 480px) {
+
+  .skills h1 {
+
+    font-size: 2.5rem;
+
+  }
+
+  .skill-card {
+
+    width: 100%;
+
+    justify-content: center;
+
   }
 
 }

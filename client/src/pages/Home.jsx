@@ -1,4 +1,8 @@
+import Footer from "../components/Footer";
+import Education
+  from "./Education";
 import Hero from "../components/Hero";
+import ParticleBackground from "../components/ParticleBackground";
 
 import Navbar from "../components/Navbar";
 
@@ -17,6 +21,7 @@ const Home = () => {
   return (
 
     <>
+      <ParticleBackground />
 
       <Navbar />
 
@@ -36,6 +41,12 @@ const Home = () => {
 
       </section>
 
+      <section id="education">
+
+        <Education />
+
+      </section>
+
       <section id="certificates">
 
         <Certificates />
@@ -46,6 +57,7 @@ const Home = () => {
         <Contact />
 
       </section>
+      <Footer />
 
     </>
 
