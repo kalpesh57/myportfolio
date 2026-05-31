@@ -5,15 +5,10 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 import axios from "axios";
-// OLD
-const API_URL = import.meta.env.VITE_API_URL;
-
-// TEMP TEST
 const API_URL =
   "https://portfolio-api-tpp3.onrender.com/api";
-const API_URL = import.meta.env.VITE_API_URL;
-console.log("API_URL =", import.meta.env.VITE_API_URL);
 
+console.log("API_URL =", API_URL);
 const Admin = () => {
 
   const token =
@@ -252,7 +247,7 @@ const Admin = () => {
       }
 
       await axios.put(
-        
+
         `${API_URL}/projects/${editingProjectId}`,
         formData,
         {
