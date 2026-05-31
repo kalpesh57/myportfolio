@@ -42,11 +42,10 @@ router.post(
       }
 
       profile.name = req.body.name;
-
       if (req.file) {
 
         profile.image =
-          `http://localhost:5000/uploads/${req.file.filename}`;
+          `${process.env.BASE_URL}/uploads/${req.file.filename}`;
 
       }
 

@@ -57,8 +57,7 @@ router.post(
 
           image:
             req.file
-              ? "http://localhost:5000/uploads/" +
-              req.file.filename
+              ? `https://portfolio-api-tpp3.onrender.com/uploads/${req.file.filename}`
               : "",
 
         });
@@ -126,11 +125,10 @@ router.put(
 
             image:
               req.file
-                ? "http://localhost:5000/uploads/" +
-                req.file.filename
+                ? `${process.env.BASE_URL}/uploads/${req.file.filename}`
                 : req.body.image,
-          },
 
+          },
           { new: true }
         );
       res.status(200).json(

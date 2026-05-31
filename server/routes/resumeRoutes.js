@@ -65,8 +65,7 @@ router.post(
             req.body.title,
 
           resumeFile:
-            `http://localhost:5000/uploads/${req.file.filename}`,
-
+            `${process.env.BASE_URL}/uploads/${req.file.filename}`,
         });
 
       await resume.save();
@@ -101,7 +100,7 @@ router.put(
 
             resumeFile:
               req.file
-                ? `http://localhost:5000/uploads/${req.file.filename}`
+                ? `${process.env.BASE_URL}/uploads/${req.file.filename}`
                 : req.body.resumeFile,
 
           },
