@@ -12,12 +12,16 @@ const resumeSchema = new mongoose.Schema({
     required: true,
   },
 
+  fileName: {
+    type: String,
+    default: "",
+  },
+
 }, {
   timestamps: true,
 });
 
-module.exports =
-  mongoose.model(
-    "Resume",
-    resumeSchema
-  );
+module.exports = mongoose.model(
+  "Resume",
+  resumeSchema
+);

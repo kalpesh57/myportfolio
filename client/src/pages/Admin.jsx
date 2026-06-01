@@ -6,8 +6,7 @@ import { useEffect } from "react";
 
 import axios from "axios";
 const API_URL =
-  "https://portfolio-api-tpp3.onrender.com/api";
-
+  "http://localhost:5000/api";
 console.log("API_URL =", API_URL);
 const Admin = () => {
 

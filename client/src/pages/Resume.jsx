@@ -76,26 +76,11 @@ const Resume = () => {
       <h1>
         MY RESUME
       </h1>
-      <p className="resume-text">
-        View or download my latest resume.
-      </p>
-
       {resume && (
 
         <>
 
-          <div className="resume-actions">
-
-            <a
-              href={resume.resumeFile}
-              target="_blank"
-              rel="noreferrer"
-              className="download-btn"
-            >
-              Download Resume
-            </a>
-
-          </div>
+       
 
           <div className="resume-container">
 

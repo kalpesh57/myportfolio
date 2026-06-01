@@ -1,27 +1,14 @@
 const express = require("express");
-const multer = require("multer");
-const path = require("path");
+
+
 
 const router = express.Router();
 
 const Profile = require("../models/Profile");
-
-const storage = multer.diskStorage({
-
-  destination: (req, file, cb) => {
-    cb(null, "uploads/");
-  },
-
-  filename: (req, file, cb) => {
-
-    cb(
-      null,
-      Date.now() + path.extname(file.originalname)
-    );
-
-  },
-
-});
+const multer = require("multer");
+const {
+  storage,
+} = require("../config/cloudinary");
 
 const upload = multer({ storage });
 
@@ -45,7 +32,7 @@ router.post(
       if (req.file) {
 
         profile.image =
-          `${process.env.BASE_URL}/uploads/${req.file.filename}`;
+          req.file.path;
 
       }
 
@@ -70,7 +57,6 @@ router.post(
 router.get("/", async (req, res) => {
 
   try {
-
     const profile = await Profile.findOne();
 
     res.status(200).json(profile);

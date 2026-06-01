@@ -1,3 +1,6 @@
+const cors = require("cors");
+require("dotenv").config();
+
 const heroRoutes =
   require("./routes/heroRoutes");
 const profileRoutes = require("./routes/profileRoutes");
@@ -11,8 +14,6 @@ const contactRoutes = require("./routes/contactRoutes");
 const path = require("path");
 const express = require("express");
 const mongoose = require("mongoose");
-const cors = require("cors");
-require("dotenv").config();
 
 const app = express();
 

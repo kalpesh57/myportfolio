@@ -42,13 +42,16 @@ const Certificates = () => {
 
   const fetchCertificates =
     async () => {
-
+      console.log(
+        "VITE_API_URL =",
+        import.meta.env.VITE_API_URL
+      );
       try {
 
         const response = await axios.get(
           `${import.meta.env.VITE_API_URL}/certificates`
         );
-
+        console.log("Certificates Data:", response.data);
         setCertificates(
           response.data
         );
@@ -86,7 +89,7 @@ const Certificates = () => {
         </p>
 
       </div>
-
+      
       <Swiper
 
         effect={"slide"}
@@ -95,7 +98,8 @@ const Certificates = () => {
 
         centeredSlides={true}
 
-        slidesPerView={3}
+        slidesPerView={1}
+
         breakpoints={{
 
           320: {
@@ -157,7 +161,7 @@ const Certificates = () => {
                     )
                   }
                 />
-
+              
                 <h3>
                   {certificate.title}
                 </h3>

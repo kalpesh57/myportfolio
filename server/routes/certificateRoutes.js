@@ -5,31 +5,9 @@ const router = express.Router();
 const Certificate =
   require("../models/Certificate");
 const multer = require("multer");
-
-const storage = multer.diskStorage({
-
-  destination: (req, file, cb) => {
-
-
-    cb(null, "uploads/");
-
-
-  },
-
-  filename: (req, file, cb) => {
-
-
-    cb(
-      null,
-      Date.now() +
-      "-" +
-      file.originalname
-    );
-
-
-  },
-
-});
+const {
+  storage,
+} = require("../config/cloudinary");
 
 const upload = multer({
   storage,
@@ -39,10 +17,7 @@ router.post(
   "/",
   upload.single("image"),
   async (req, res) => {
-    console.log("BODY:", req.body);
-    console.log("FILE:", req.file);
     try {
-
       const certificate =
         new Certificate({
 
@@ -57,9 +32,8 @@ router.post(
 
           image:
             req.file
-              ? `https://portfolio-api-tpp3.onrender.com/uploads/${req.file.filename}`
+              ? req.file.path
               : "",
-
         });
 
       await certificate.save();
@@ -125,7 +99,7 @@ router.put(
 
             image:
               req.file
-                ? `${process.env.BASE_URL}/uploads/${req.file.filename}`
+                ? req.file.path
                 : req.body.image,
 
           },

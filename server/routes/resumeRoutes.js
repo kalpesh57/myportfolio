@@ -2,30 +2,14 @@ const express = require("express");
 
 const router = express.Router();
 
-const multer = require("multer");
 
 const Resume = require("../models/Resume");
 
-const storage = multer.diskStorage({
 
-  destination: (req, file, cb) => {
-
-    cb(null, "uploads/");
-
-  },
-
-  filename: (req, file, cb) => {
-
-    cb(
-      null,
-      Date.now() +
-      "-" +
-      file.originalname
-    );
-
-  },
-
-});
+const multer = require("multer");
+const {
+  storage,
+} = require("../config/cloudinary");
 
 const upload = multer({
   storage,
@@ -65,7 +49,11 @@ router.post(
             req.body.title,
 
           resumeFile:
-            `${process.env.BASE_URL}/uploads/${req.file.filename}`,
+            req.file.path,
+
+          fileName:
+            req.file.originalname,
+
         });
 
       await resume.save();
@@ -73,6 +61,7 @@ router.post(
       res.json(resume);
 
     } catch (error) {
+
 
       res.status(500).json(error);
 
@@ -100,8 +89,13 @@ router.put(
 
             resumeFile:
               req.file
-                ? `${process.env.BASE_URL}/uploads/${req.file.filename}`
+                ? req.file.path
                 : req.body.resumeFile,
+
+            fileName:
+              req.file
+                ? req.file.originalname
+                : req.body.fileName,
 
           },
 
