@@ -6,7 +6,7 @@ import { useEffect } from "react";
 
 import axios from "axios";
 const API_URL =
-  "http://localhost:5000/api";
+  import.meta.env.VITE_API_URL;
 console.log("API_URL =", API_URL);
 const Admin = () => {
 
